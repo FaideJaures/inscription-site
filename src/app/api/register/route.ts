@@ -7,9 +7,9 @@ import User from "@/lib/models/User";
 const bcrypt = require("bcrypt");
 
 
-connectDB();
 
 export async function POST(req: Request) {
+  await connectDB();
   try {
     const body = await req.json();
     const { groupName, type, project, members } = body;
