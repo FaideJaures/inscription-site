@@ -91,43 +91,43 @@ export default function RegistrationForm() {
       const memberErrors: Partial<Record<keyof Member, string>> = {};
       
       if (!member.nom.trim()) {
-        memberErrors.nom = "Last name is required";
+        memberErrors.nom = "Le nom est requis";
         isValid = false;
       }
       
       if (!member.prenom.trim()) {
-        memberErrors.prenom = "First name is required";
+        memberErrors.prenom = "Le prénom est requis";
         isValid = false;
       }
       
       if (!member.telephone.trim()) {
-        memberErrors.telephone = "Phone number is required";
+        memberErrors.telephone = "Le numéro de téléphone est requis";
         isValid = false;
       } else if (!/^[0-9+\s]{8,}$/.test(member.telephone)) {
-        memberErrors.telephone = "Invalid phone number";
+        memberErrors.telephone = "Numéro de téléphone invalide";
         isValid = false;
       }
       
       if (!member.email.trim()) {
-        memberErrors.email = "Email is required";
+        memberErrors.email = "L'email est requis";
         isValid = false;
       } else if (!/^\S+@\S+\.\S+$/.test(member.email)) {
-        memberErrors.email = "Invalid email format";
+        memberErrors.email = "Format d'email invalide";
         isValid = false;
       }
       
       if (!member.etablissement.trim()) {
-        memberErrors.etablissement = "Institution is required";
+        memberErrors.etablissement = "L'etablissement est requis";
         isValid = false;
       }
       
       if (!member.niveau.trim()) {
-        memberErrors.niveau = "Level is required";
+        memberErrors.niveau = "Le niveau scolaire est requis";
         isValid = false;
       }
       
       if (!member.specialite.trim()) {
-        memberErrors.specialite = "Specialty is required";
+        memberErrors.specialite = "La specialite est requise";
         isValid = false;
       }
       
@@ -138,17 +138,17 @@ export default function RegistrationForm() {
     const projectErrors: Partial<Record<keyof Project, string>> = {};
     
     if (!project.titre.trim()) {
-      projectErrors.titre = "Project title is required";
+      projectErrors.titre = "Le titre du projet est requis";
       isValid = false;
     }
     
     if (!project.descriptif.trim()) {
-      projectErrors.descriptif = "Project description is required";
+      projectErrors.descriptif = "La description du projet est requise";
       isValid = false;
     }
     
     if (!project.langages.trim()) {
-      projectErrors.langages = "Programming languages are required";
+      projectErrors.langages = "Les langages de programmation utilisés sont requis";
       isValid = false;
     }
     
@@ -263,12 +263,12 @@ export default function RegistrationForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Group Information */}
         <div>
-          <h2 className="text-xl font-bold mb-4">Group Information</h2>
           <div className="space-y-4">
             {type === "groupe" && (
               <div>
+                <h2 className="text-xl font-bold mb-4">Information du groupe</h2>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Group Name
+                  Nom du groupe
                 </label>
                 <input
                   type="text"
@@ -289,7 +289,7 @@ export default function RegistrationForm() {
             )}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Registration Type
+               Type d&apos;inscritpion
               </label>
               <div className="flex space-x-6">
                 <label className="flex items-center">
@@ -320,13 +320,13 @@ export default function RegistrationForm() {
         {/* Member Details */}
         <div>
           <h2 className="text-xl font-bold mb-4">
-            {type === "solo" ? "Your Details" : "Member Details"}
+            {type === "solo" ? "Vos informations" : "Information des membres"}
           </h2>
           {(type === "solo" ? members.slice(0, 1) : members).map(
             (member, index) => (
               <div key={index} className="space-y-4 mb-6 border-b pb-4">
                 {type === "groupe" && (
-                  <h3 className="text-lg font-semibold">Member {index + 1}</h3>
+                  <h3 className="text-lg font-semibold">Membre {index + 1}</h3>
                 )}
                 
                 {Object.entries(member).map(([field, value]) => (
@@ -375,14 +375,14 @@ export default function RegistrationForm() {
               onClick={addMember}
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
             >
-              Add Member
+              Ajouter des membres
             </button>
           )}
         </div>
 
         {/* Project Details */}
         <div>
-          <h2 className="text-xl font-bold mb-4">Project Details</h2>
+          <h2 className="text-xl font-bold mb-4">Details du projet</h2>
           <div className="space-y-4">
             {Object.entries(project).map(([field, value]) => (
               <div key={field}>
@@ -400,7 +400,7 @@ export default function RegistrationForm() {
                     }
                     placeholder={
                       field === "autres" 
-                        ? "Other Details (Optional)" 
+                        ? "Autres informations (Optionel)" 
                         : field.charAt(0).toUpperCase() + field.slice(1)
                     }
                     className={`border rounded-md p-2 w-full focus:outline-none focus:ring-2 ${
@@ -452,7 +452,7 @@ export default function RegistrationForm() {
                 : "hover:bg-blue-600"
             }`}
           >
-            {isSubmitting ? "Submitting..." : "Submit"}
+            {isSubmitting ? "Envoie de l'inscription..." : "Envoyer l'inscription"}
           </button>
         </div>
       </form>
