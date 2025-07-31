@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 
 
 export async function GET(req: Request) {
-  connectDB();
+  await connectDB();
   try {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
@@ -47,6 +47,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       { message: "Error fetching users", error },
       { status: 500 }
