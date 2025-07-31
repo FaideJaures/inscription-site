@@ -30,7 +30,7 @@ export default function RootLayout({
             © {new Date().getFullYear()} MBAYA CODE CONTEST. All rights
             reserved.
           </p>
-          <p className="mt-2">Made by me</p>
+          <p className="mt-2">Made by me | +241 02 35 31 34</p>
         </div>
       </body>
     </html>
