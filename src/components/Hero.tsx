@@ -14,8 +14,9 @@ const Hero: React.FC = () => {
         />
       </div>
       <h1 className="w-[94%] text-3xl md:text-3xl font-bold">
-        Bienvenue au <b className='text-blue-500'>MBAYA_CODE_CONTEST</b> édition 3
+        Bienvenue au<br/> <b className='text-blue-500'>MBAYA_CODE_CONTEST</b><br/> édition 3
       </h1>
+      <h2 className='text-2xl'>Déroulement le 9 août 2025</h2>
     </div>
   );
 };

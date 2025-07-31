@@ -38,7 +38,7 @@ export default function Home() {
 
       <Carousel title="Premiere edition" images={contest1} />
       <Carousel title="Deuxieme edition" images={contest2} />
-      <div className="fixed text-xl z-30 bottom-24 right-[50%] -translate-x-[-50%] text-center w-max">
+      <div className="fixed text-xl z-25 bottom-20 right-[50%] -translate-x-[-50%] text-center w-max">
         <Link
           href="/inscription"
           className="bg-black text-white px-4 py-2 rounded"

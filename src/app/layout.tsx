@@ -22,24 +22,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <div className="mt-12 text-sm text-center text-gray-600">
+        <div className="mt-15 text-sm text-center text-gray-600">
           <Link href="/conditions" className="text-blue-500 hover:underline">
             Conditions
           </Link>
           <p className="mt-2">
-            © {new Date().getFullYear()} MBAYA CODE CONTEST. All rights reserved.
+            © {new Date().getFullYear()} MBAYA CODE CONTEST. All rights
+            reserved.
           </p>
-          <p className="mt-2">
-            Made by{" "}
-            <a
-              href="https://portfolio-jaures.surge.sh/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-blue-500 hover:underline"
-            >
-              me
-            </a>
-          </p>
+          <p className="mt-2">Made by me</p>
         </div>
       </body>
     </html>
