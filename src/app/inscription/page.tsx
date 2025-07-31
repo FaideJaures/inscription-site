@@ -9,7 +9,7 @@ export default function Inscription() {
       <Link href="/" className="mb-4 inline-block bg-gray-500 text-white px-4 py-2 rounded hover:bg-black">
         Acceuil
       </Link>
-      <h1 className="text-3xl font-bold mb-4">Enregistrement pour la 3eme edition de MBAYA CONTEST.</h1>
+      <h1 className="text-3xl font-bold mb-4">Enregistrement pour la 3eme edition de MBAYA CODE CONTEST.</h1>
       <RegistrationForm />
     </div>
   );

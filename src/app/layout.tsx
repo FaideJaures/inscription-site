@@ -27,7 +27,7 @@ export default function RootLayout({
             Conditions
           </Link>
           <p className="mt-2">
-            © {new Date().getFullYear()} MBAYA CONTEST. All rights reserved.
+            © {new Date().getFullYear()} MBAYA CODE CONTEST. All rights reserved.
           </p>
           <p className="mt-2">
             Made by{" "}
