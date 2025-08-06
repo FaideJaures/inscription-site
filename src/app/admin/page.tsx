@@ -1,8 +1,10 @@
+// pages/admin.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
+// Add new fields to the interfaces
 interface Project {
   titre: string;
   descriptif: string;
@@ -13,8 +15,8 @@ interface Project {
 interface Member {
   nom: string;
   prenom: string;
-  email: string;
   telephone: string;
+  email: string;
   etablissement?: string;
   niveau?: string;
   specialite?: string;
@@ -22,13 +24,16 @@ interface Member {
 
 interface User {
   _id: string;
-  name: string;
+  name?: string;
+  sexe?: "M" | "F";
   email: string;
   role: string;
   registrationType: "solo" | "groupe";
   groupName?: string;
   project: Project;
   members: Member[];
+  createdAt: string;
+  __v?: number;
 }
 
 export default function Admin() {
@@ -47,9 +52,6 @@ export default function Admin() {
       const data = await res.json();
       setUsers(data);
       setIsAuthenticated(true);
-      // Note: Using in-memory storage instead of localStorage for artifact compatibility
-      // localStorage.setItem("adminEmail", email);
-      // localStorage.setItem("adminPassword", password);
     } else {
       alert("Identifiants invalides ou vous n'êtes pas administrateur");
     }
@@ -61,8 +63,6 @@ export default function Admin() {
   };
 
   const handleLogout = () => {
-    // localStorage.removeItem("adminEmail");
-    // localStorage.removeItem("adminPassword");
     setIsAuthenticated(false);
     setUsers([]);
     setEmail("");
@@ -70,7 +70,6 @@ export default function Admin() {
   };
 
   const handleRefresh = async () => {
-    // For artifact compatibility, we'll just refetch with current credentials
     if (email && password) {
       await fetchUsers(email, password);
     }
@@ -112,14 +111,32 @@ export default function Admin() {
     );
   }
 
-  const totalRegistrations = users.length;
-  const soloUsers = users.filter((user) => user.registrationType === "solo");
-  const groupUsers = users.filter((user) => user.registrationType === "groupe");
+  const totalRegistrations = users.filter(
+    (user) => user.role === "user"
+  ).length;
+  const soloUsers = users.filter(
+    (user) => user.registrationType === "solo" && user.role === "user"
+  );
+  const groupUsers = users.filter(
+    (user) => user.registrationType === "groupe" && user.role === "user"
+  );
   const totalSolo = soloUsers.length;
   const totalGroups = groupUsers.length;
   const totalParticipants =
     soloUsers.length +
     groupUsers.reduce((acc, group) => acc + group.members.length, 0);
+
+  // Helper function to format date
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    return new Date(dateString).toLocaleDateString("fr-FR", options);
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -142,10 +159,10 @@ export default function Admin() {
       </div>
       <div className="mb-6">
         <p className="text-lg">
-          Total des inscriptions : {totalRegistrations-1} ({totalSolo -1} solo,{" "}
+          Total des inscriptions : {totalRegistrations} ({totalSolo} solo,{" "}
           {totalGroups} groupes)
         </p>
-        <p className="text-lg">Total des participants : {totalParticipants -1}</p>
+        <p className="text-lg">Total des participants : {totalParticipants}</p>
       </div>
       {users
         .filter((user) => user.role === "user")
@@ -176,11 +193,34 @@ export default function Admin() {
             </div>
             {expanded[user._id] && (
               <div className="mt-4">
-                <div>
+                <p>
+                  <strong>ID :</strong> {user._id}
+                </p>
+                <p>
+                  <strong>Date d&apos;inscription :</strong>{" "}
+                  {formatDate(user.createdAt)}
+                </p>
+                <p>
+                  <strong>Type d&apos;inscription :</strong>{" "}
+                  {user.registrationType === "solo" ? "Solo" : "Groupe"}
+                </p>
+                {user.registrationType === "solo" && (
+                  <>
+                    <p>
+                      <strong>Sexe :</strong> {user.sexe || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Email (principal) :</strong> {user.email}
+                    </p>
+                  </>
+                )}
+                <div className="mt-4">
                   <h3 className="text-xl font-semibold mb-2">
                     Projet : {user.project.titre}
                   </h3>
-                  <p className="mb-2">{user.project.descriptif}</p>
+                  <p className="mb-2">
+                    <strong>Description :</strong> {user.project.descriptif}
+                  </p>
                   <p className="mb-2">
                     <strong>Langages :</strong> {user.project.langages || "N/A"}
                   </p>
@@ -188,7 +228,7 @@ export default function Admin() {
                     <strong>Autres :</strong> {user.project.autres || "N/A"}
                   </p>
                 </div>
-                {user.registrationType === "groupe" && (
+                {user.members.length > 0 && (
                   <div className="mt-4">
                     <h4 className="text-lg font-semibold mb-2">Membres :</h4>
                     <ul className="space-y-2">

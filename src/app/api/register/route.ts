@@ -41,6 +41,7 @@ export async function POST(req: Request) {
 
     const newUser = new User({
       name: accountName,
+      sexe: teamLeader.sexe,
       email: accountEmail,
       password: hashedPassword,
       role,

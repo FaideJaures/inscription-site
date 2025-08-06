@@ -1,10 +1,10 @@
+// pages/api/groups.ts
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import User from "@/lib/models/User";
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const bcrypt = require("bcrypt");
-
 
 export async function GET(req: Request) {
   await connectDB();
@@ -20,15 +20,15 @@ export async function GET(req: Request) {
       );
     }
 
-    const user = await User.findOne({ email });
-    if (!user) {
+    const admin = await User.findOne({ email });
+    if (!admin) {
       return NextResponse.json(
         { message: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
     if (!isPasswordValid) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -36,7 +36,7 @@ export async function GET(req: Request) {
       );
     }
 
-    if (user.role !== "admin") {
+    if (admin.role !== "admin") {
       return NextResponse.json(
         { message: "Forbidden: Admin access required" },
         { status: 403 }
@@ -47,7 +47,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(users, { status: 200 });
   } catch (error) {
-    console.log(error)
+    console.error("Error fetching users:", error); // Use console.error for errors
     return NextResponse.json(
       { message: "Error fetching users", error },
       { status: 500 }

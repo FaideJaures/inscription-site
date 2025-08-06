@@ -9,6 +9,7 @@ import Image from "next/image";
 type Member = {
   nom: string;
   prenom: string;
+  sexe: string;
   telephone: string;
   email: string;
   etablissement: string;
@@ -58,6 +59,7 @@ export default function RegistrationForm() {
     {
       nom: "",
       prenom: "",
+      sexe: "M",
       telephone: "",
       email: "",
       etablissement: "",
@@ -92,6 +94,7 @@ export default function RegistrationForm() {
         {
           nom: "",
           prenom: "",
+          sexe: "M",
           telephone: "",
           email: "",
           etablissement: "",
@@ -126,6 +129,12 @@ export default function RegistrationForm() {
         memberErrors.prenom = "Le prénom est requis";
         isValid = false;
       }
+
+      if (!member.sexe.trim()) {
+        memberErrors.sexe = "Le sexe est requis";
+        isValid = false;
+      }
+
 
       if (!member.telephone.trim()) {
         memberErrors.telephone = "Le numéro de téléphone est requis";
@@ -514,6 +523,22 @@ export default function RegistrationForm() {
                       </p>
                     )}
                   </div>
+
+                  {/* Sexe */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Sexe
+                    </label>
+                    <select
+                      value={member.sexe}
+                      onChange={(e) =>
+                        handleMemberChange(index, "sexe", e.target.value)
+                      }
+                      className={`border rounded-md p-2`}>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                      </select>
+                      </div>
 
                   {/* Téléphone */}
                   <div>
