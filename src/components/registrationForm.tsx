@@ -267,7 +267,6 @@ export default function RegistrationForm() {
   const handleDenyConditions = () => {
     setShowConditionsPopup(false);
     setPendingSubmissionData(null);
-    router.push("/");
   };
 
   const handleMemberChange = (

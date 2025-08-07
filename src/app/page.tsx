@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import SchoolsList from "@/components/SchoolsList";
+import List from "@/components/List";
 import Carousel from "@/components/Carousel";
 import Link from "next/link";
 
@@ -27,7 +27,15 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <SchoolsList
+      <List
+        title="Nos partenaires"
+        images={[
+          "/partenaires/cgi.png",
+          "/partenaires/airtel.png",
+        ]}
+      />
+      <List
+        title="Écoles susceptibles de participer"
         images={[
           "/schools/USTM.png",
           "/schools/INPTIC-logo.png",
@@ -38,12 +46,14 @@ export default function Home() {
 
       <Carousel title="Premiere edition" images={contest1} />
       <Carousel title="Deuxieme edition" images={contest2} />
-      <div className="fixed text-xl z-25 bottom-20 right-[50%] -translate-x-[-50%] text-center w-max">
+      <div className="fixed text-xl z-25 top-5 right-5 text-center w-max">
         <Link
           href="/inscription"
-          className="bg-black text-white px-4 py-2 rounded"
+          className="bg-black flex flex-col items-center justify-center text-white px-4 py-2 rounded"
         >
           S&apos;inscrire maintenant
+          
+          <b className="text-green-500">Inscription ouverte</b>
         </Link>
       </div>
     </div>
