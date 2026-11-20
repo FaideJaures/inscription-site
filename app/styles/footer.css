@@ -1,0 +1,132 @@
+.site-foot {
+  margin-top: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--line-strong);
+}
+
+.site-foot-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: 40px;
+  padding-block: 48px 36px;
+}
+
+.foot-brand {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+svg.foot-mark {
+  height: 56px;
+  width: auto;
+  color: var(--fg);
+}
+
+.foot-brand p {
+  max-width: 38ch;
+  color: var(--fg-soft);
+  font-size: 14.5px;
+}
+
+.foot-col {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  font-size: 14.5px;
+}
+
+.foot-col ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foot-col a {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.foot-col a:hover {
+  color: var(--vert);
+}
+
+.foot-title {
+  font-family: var(--type-code);
+  font-size: 12.5px;
+  color: var(--vert);
+}
+
+.foot-title:not(:first-child) {
+  margin-top: 12px;
+}
+
+.theme-switch {
+  display: inline-flex;
+  justify-self: start;
+  border: 1px solid var(--line-strong);
+}
+
+.theme-switch button {
+  padding: 6px 12px;
+  font-family: var(--type-code);
+  font-size: 12.5px;
+  color: var(--fg-soft);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.theme-switch button + button {
+  border-left: 1px solid var(--line-strong);
+}
+
+.theme-switch button:hover {
+  color: var(--fg);
+}
+
+.theme-switch button[aria-checked="true"] {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.site-foot-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 18px 24px;
+  border-top: 1px dashed var(--line-strong);
+  font-family: var(--type-code);
+  font-size: 12.5px;
+  color: var(--fg-soft);
+}
+
+.foot-top {
+  color: var(--fg-soft);
+  text-decoration: none;
+}
+
+.foot-top:hover {
+  color: var(--fg);
+}
+
+@media (max-width: 900px) {
+  .site-foot-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .foot-brand {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-foot-grid {
+    grid-template-columns: 1fr;
+  }
+  .foot-brand {
+    grid-column: auto;
+  }
+}

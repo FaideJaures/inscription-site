@@ -1,0 +1,183 @@
+/* ── Règlement page: sticky index + articles ──────────────────────────── */
+
+.rules-layout {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 56px;
+  padding-top: 48px;
+  padding-bottom: 96px;
+}
+
+.rules-index {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  align-self: start;
+}
+
+.rules-index-title {
+  margin-bottom: 12px;
+  font-family: var(--type-code);
+  font-size: 15px;
+  color: var(--vert);
+}
+
+.rules-index ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--line-strong);
+}
+
+.rules-index a {
+  display: block;
+  padding: 4px 14px;
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  font-family: var(--type-code);
+  font-size: 13.5px;
+  color: var(--fg-soft);
+  text-decoration: none;
+}
+
+.rules-index a:hover {
+  color: var(--fg);
+}
+
+.rules-index a[aria-current] {
+  color: var(--fg);
+  border-left-color: var(--vert);
+  background: color-mix(in srgb, var(--vert) 10%, transparent);
+}
+
+@media (max-width: 900px) {
+  .rules-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding-top: 32px;
+  }
+  .rules-index {
+    top: var(--header-h);
+    z-index: 10;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 8px var(--gutter);
+    background: color-mix(in srgb, var(--bg) 96%, transparent);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .rules-index-title {
+    display: none;
+  }
+  .rules-index ol {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    border-left: 0;
+  }
+  .rules-index a {
+    margin: 0;
+    padding: 4px 10px;
+    border: 1px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  .rules-index a[aria-current] {
+    border-color: var(--vert);
+  }
+}
+
+/* ── Articles (used on /conditions and inside the form's rules box) ───── */
+
+.reglement {
+  display: grid;
+  gap: 28px;
+  max-width: 72ch;
+}
+
+.reglement-preamble {
+  padding: 18px 20px;
+  border: 1px dashed var(--line-strong);
+  font-style: italic;
+  color: var(--fg-soft);
+}
+
+.articles {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 20px;
+  padding-block: 18px;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.article-num {
+  font-family: var(--type-code);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vert);
+  padding-top: 3px;
+}
+
+.reglement-summary {
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+}
+
+@media (max-width: 640px) {
+  .article {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .rules-index {
+    scroll-margin-top: 0;
+  }
+  .article {
+    scroll-margin-top: calc(var(--header-h) + 64px);
+  }
+}
+
+/* ── FAQ page ──────────────────────────────────────────────────────────── */
+
+.faq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.6fr);
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 96px;
+}
+
+.ask-box {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+}
+
+.ask-box p:not(.sec-label) {
+  color: var(--fg-soft);
+}
+
+.ask-phone {
+  font-family: var(--type-code);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .faq-layout {
+    grid-template-columns: 1fr;
+  }
+  .ask-box {
+    position: static;
+  }
+}

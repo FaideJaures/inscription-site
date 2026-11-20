@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+/* Palette: the Gabon flag (green, yellow, blue) plus a red for errors and
+   highlights. The light theme darkens each colour so text stays readable. */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #070a12;
+  --surface: #0c111d;
+  --surface-2: #121a2b;
+  --fg: #eaf0ff;
+  --fg-soft: #8b95b2;
+  --line: color-mix(in srgb, var(--fg) 10%, transparent);
+  --line-strong: color-mix(in srgb, var(--fg) 20%, transparent);
+  --grid: rgb(234 240 255 / 0.035);
+
+  --vert: #2ee07a;
+  --jaune: #ffd23f;
+  --bleu: #3a63ff;
+  --rouge: #ff5d6c;
+
+  /* Raw flag colours, identical in both themes (stripes, terminal accents). */
+  --flag-vert: #2ee07a;
+  --flag-jaune: #ffd23f;
+  --flag-bleu: #3a63ff;
+
+  --type-body: var(--ff-body), system-ui, sans-serif;
+  --type-title: var(--ff-title), var(--ff-body), system-ui, sans-serif;
+  --type-code: var(--ff-code), ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --type-mark: var(--ff-mark), var(--ff-title), sans-serif;
+
+  --page-max: 1180px;
+  --gutter: 24px;
+  --header-h: 68px;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --surface-2: #eaeef7;
+  --fg: #0b0f1a;
+  --fg-soft: #4f5874;
+  --line: rgb(11 15 26 / 0.11);
+  --line-strong: rgb(11 15 26 / 0.22);
+  --grid: rgb(11 15 26 / 0.045);
+
+  --vert: #0b8f4d;
+  --jaune: #9a6b00;
+  --bleu: #2448d8;
+  --rouge: #d42c45;
+}
+
+/* Terminal-style blocks stay dark in both themes. Re-declaring the base
+   tokens here makes everything inside them (buttons included) read as dark. */
+.terminal,
+.terminal-bar,
+.cta-box,
+.viewer {
+  --bg: #070a12;
+  --surface: #0b1020;
+  --fg: #e3eaff;
+  --fg-soft: #93a0c2;
+  --line: rgb(227 234 255 / 0.12);
+  --line-strong: rgb(227 234 255 / 0.24);
+  --vert: #2ee07a;
+  --jaune: #ffd23f;
+  --bleu: #6f8cff;
+  --rouge: #ff5d6c;
+  color: var(--fg);
+}

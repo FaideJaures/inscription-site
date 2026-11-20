@@ -1,34 +1,22 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  trailingSlash: false,
+// Sent with every response.
+const SECURITY_HEADERS = Object.entries({
+  "X-Frame-Options": "DENY",
+  "X-Content-Type-Options": "nosniff",
+  "Referrer-Policy": "same-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+}).map(([key, value]) => ({ key, value }));
+
+const config: NextConfig = {
+  poweredByHeader: false,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**', // Allows all HTTPS domains
-      },
-      {
-        protocol: 'http',
-        hostname: '**', // Allows all HTTP domains (if needed)
-      }
-    ],
+    // Photos of past editions never change: let browsers and the CDN keep them for 30 days.
+    minimumCacheTTL: 2_592_000,
+    formats: ["image/webp", "image/avif"],
+    deviceSizes: [480, 768, 1024, 1440, 1920],
   },
-  env: {
-    MONGODB_URI: process.env.MONGODB_URI,
-  },
-  async headers() {
-     return [
-      {
-        source: '/api/:path*',
-        headers: [
-          { key: 'Access-Control-Allow-Origin', value: '*' },
-          { key: 'Access-Control-Allow-Methods', value: 'GET, POST, PUT, DELETE, OPTIONS' },
-          { key: 'Access-Control-Allow-Headers', value: 'Content-Type, Authorization' },
-        ],
-      },
-    ]
-  },
+  headers: async () => [{ source: "/(.*)", headers: SECURITY_HEADERS }],
 };
 
-export default nextConfig;
+export default config;

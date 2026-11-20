@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MBAYA CODE CONTEST — édition 2026
 
-## Getting Started
+Site d'inscription de la 4ᵉ édition : accueil avec compteurs en direct, photos des éditions
+passées, partenaires et écoles, règlement, FAQ, inscription solo ou en équipe en plusieurs étapes
+et espace organisateurs. Thème clair ou sombre, au choix du visiteur.
 
-First, run the development server:
+## Démarrer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # puis renseigner MONGODB_URI
+npm run dev                   # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Ce qui change d'une édition à l'autre
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Tout est dans `app/lib/contest.ts` :
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `EDITION`, `YEAR` — numéro et année ;
+- `EVENT_DATE` — date de la finale (`"2026-12-12"`), `null` tant qu'elle n'est pas fixée
+  (le site affiche alors « Date annoncée prochainement ») ;
+- `REGISTRATION_OPEN` — `false` ferme le formulaire et l'API ;
+- `CONTACT_PHONE`, `PARTNERS`, `SCHOOLS`, `PAST_EDITIONS`.
 
-## Learn More
+## Pages
 
-To learn more about Next.js, take a look at the following resources:
+| Route | Rôle |
+| --- | --- |
+| `/` | Accueil : compteurs en direct, principe, déroulement, éditions passées, partenaires, FAQ |
+| `/inscription` | Choix solo / équipe, puis formulaire sur une seule page (équipe, membres, projet, règlement et envoi) |
+| `/inscription/merci` | Confirmation |
+| `/conditions` | Règlement (13 articles, retranscrits du document original, consultable aussi) |
+| `/galerie` | Toutes les photos des éditions 1 et 2 |
+| `/faq` | Questions fréquentes |
+| `/admin` | Espace organisateurs : statistiques, recherche, détail, export CSV, archive 2025 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Données
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Les nouvelles inscriptions vont dans la collection `registrations`, avec un champ `edition`.
+  Une adresse e-mail est unique **par édition** (l'ancienne collection `users` imposait l'unicité
+  globale, ce qui empêchait un candidat 2025 de se réinscrire).
+- Les comptes admin restent dans `users` (`role: "admin"`, mot de passe bcrypt) : les comptes
+  existants fonctionnent tels quels. Pour en créer un :
 
-## Deploy on Vercel
+  ```bash
+  MONGODB_URI=... npm run create-admin -- admin@exemple.com "mot-de-passe-solide"
+  ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Les inscriptions 2025 (collection `users`, `role: "user"`) restent lisibles dans l'admin,
+  onglet « Archive 2025 ».
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API
+
+- `POST /api/register` — validation côté serveur (mêmes règles que le formulaire,
+  `app/lib/registration.ts`), refus si une adresse est déjà inscrite à l'édition.
+- `GET /api/stats` — compteurs agrégés publics (aucune donnée personnelle).
+- `POST /api/admin/registrations` — identifiants dans le corps de la requête, plus dans l'URL.
+
+## Styles
+
+Les feuilles de style sont dans `app/styles/` : `tokens.css` (couleurs et polices, thèmes clair et sombre),
+`base.css`, `buttons.css`, puis une feuille par zone (`header`, `home`, `form`, `gallery`, `rules`,
+`admin`, `footer`). Elles sont importées dans `app/layout.tsx`.

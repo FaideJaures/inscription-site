@@ -1,0 +1,73 @@
+/* Anything that opens a photo: a bare button around the image. */
+.unfold {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 18px;
+  font-size: 14.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+  backdrop-filter: blur(10px) saturate(1.3);
+  -webkit-backdrop-filter: blur(10px) saturate(1.3);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button-outline {
+  color: color-mix(in srgb, var(--fg) 78%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fg) 16%, transparent);
+}
+
+.button-outline:hover {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--fg) 12%, transparent);
+}
+
+.button-primary {
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.button-primary:hover {
+  filter: brightness(1.12);
+}
+
+.button-wide {
+  width: 100%;
+  height: 46px;
+}
+
+.button-small {
+  height: 32px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.button.unfold {
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.button[disabled],
+.button[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

@@ -39,4 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.env.local
+
+# Example env files are documentation, not secrets — the .env* rule
+# above would otherwise keep them out of the repo entirely.
+!.env.example
+
+# Generated env-var report. The live audit is served by opsbot
+# (/internal/env/audit) and writes nothing, so this file no longer belongs
+# in the tree — it only ever forced a stash before the next pull.
+variable.md
