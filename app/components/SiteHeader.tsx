@@ -25,12 +25,12 @@ export default function SiteHeader() {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setMenuOpen(false);
     };
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
+    const { overflow } = document.documentElement.style;
+    document.documentElement.style.overflow = "hidden";
     addEventListener("keydown", onKey);
     return () => {
       removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
+      document.documentElement.style.overflow = overflow;
     };
   }, [menuOpen]);
 

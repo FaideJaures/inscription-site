@@ -39,12 +39,35 @@ export default function VerificationField({
   const [error, setError] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
   const timer = useRef<number | null>(null);
+  const [toast, setToast] = useState(false);
+  const toastTimer = useRef<number | null>(null);
   const codeInput = useRef<HTMLInputElement>(null);
 
   const current: Phase = sentTo !== null && sentTo !== target ? "idle" : phase;
   const what = channel === "email" ? "e-mail" : "WhatsApp";
 
-  useEffect(() => () => void (timer.current && window.clearInterval(timer.current)), []);
+  useEffect(
+    () => () => {
+      if (timer.current) window.clearInterval(timer.current);
+      if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    },
+    [],
+  );
+
+  function showSpamToast() {
+    setToast(true);
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(false), 8000);
+  }
+
+  const spamToast = toast && (
+    <div className="toast" role="status">
+      <span>Le code peut arriver dans les spams ou les courriers indésirables.</span>
+      <button type="button" className="toast-close" aria-label="Fermer" onClick={() => setToast(false)}>
+        ×
+      </button>
+    </div>
+  );
 
   function startCooldown() {
     setCooldown(RESEND_COOLDOWN_S);
@@ -79,6 +102,7 @@ export default function VerificationField({
       setCode("");
       setPhase("codeSent");
       startCooldown();
+      if (channel === "email") showSpamToast();
       window.setTimeout(() => codeInput.current?.focus(), 0);
     } catch {
       setError("Connexion impossible. Réessayez.");
@@ -113,9 +137,12 @@ export default function VerificationField({
 
   if (verified) {
     return (
-      <p className="verify-line" data-state="verified">
-        ✓ {channel === "email" ? "adresse vérifiée" : "numéro vérifié"}
-      </p>
+      <>
+        <p className="verify-line" data-state="verified">
+          ✓ {channel === "email" ? "adresse vérifiée" : "numéro vérifié"}
+        </p>
+        {spamToast}
+      </>
     );
   }
 
@@ -159,6 +186,7 @@ export default function VerificationField({
           </button>
         </div>
         {error && <p className="error-text">{error}</p>}
+        {spamToast}
       </div>
     );
   }
@@ -169,6 +197,7 @@ export default function VerificationField({
         {current === "sending" ? "envoi du code…" : `→ vérifier par ${what}`}
       </button>
       {error && <p className="error-text">{error}</p>}
+      {spamToast}
     </div>
   );
 }

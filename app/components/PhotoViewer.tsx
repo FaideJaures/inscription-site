@@ -44,12 +44,12 @@ export function PhotoViewerProvider({ children }: { children: ReactNode }) {
       if (event.key === "ArrowLeft") setAlbum((a) => (a ? { ...a, at: (a.at - 1 + a.photos.length) % a.photos.length } : a));
       if (event.key === "ArrowRight") setAlbum((a) => (a ? { ...a, at: (a.at + 1) % a.photos.length } : a));
     };
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
+    const { overflow } = document.documentElement.style;
+    document.documentElement.style.overflow = "hidden";
     addEventListener("keydown", onKey);
     return () => {
       removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
+      document.documentElement.style.overflow = overflow;
     };
   }, [isOpen]);
 

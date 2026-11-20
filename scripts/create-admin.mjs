@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 const [email, password] = process.argv.slice(2);
-const uri = "";
+const uri = process.env.MONGODB_URI;
 
 if (!uri) {
   console.error("MONGODB_URI is not set.");
